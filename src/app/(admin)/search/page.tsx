@@ -25,7 +25,7 @@ const FormSchema = z.object({
 
 export default function Page() {
 
-  const { search, priceList, setPrice, setSearch, fetchData, isLoading, error } = useSearchArticles();
+  const { search, priceList, setPrice, setSearch, fetchData, isLoading } = useSearchArticles();
   const [pricesList, setPricesList] = useState<IPriceList[]>([]);
   const articulos = useSearchStore(useSearchArticles, (state) => state.articles);
 

@@ -2,8 +2,6 @@ import {
     LayoutGrid,
     LucideIcon,
     Search,
-    CreditCard,
-    Wrench,
     Receipt,
     Tickets,
     Contact
@@ -28,6 +26,7 @@ import {
     menus: Menu[];
   };
   
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   export function getMenuList(pathname: string): Group[] {
     return [
       {

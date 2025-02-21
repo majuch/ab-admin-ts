@@ -13,7 +13,7 @@ export default function LoginPage() {
         startLoading();
         await authFetch({
             endpoint: 'login',
-            redirectRoute: '/search',
+            redirectRoute: '/dashboard',
             formData
         })
         finishLoading();

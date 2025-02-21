@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { NotificationProvider } from "@/context/NotificationContext";
+import { ThemeProvider } from "@/context/ThemeContext";
+import ClientOnly from "@/components/clientOnly";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,17 +24,17 @@ interface RootLayoutProps {
   children: React.ReactNode;
 }
 
-export default function RootLayout({ children }: RootLayoutProps){
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
-        <NotificationProvider>
-          <main className="flex p-2 pr-4 items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
-            {children}
-          </main>
-        </NotificationProvider>
+    <html lang="es">
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <ClientOnly>
+          <ThemeProvider defaultTheme="dark" attribute="class" enableSystem={false}>
+            <NotificationProvider>
+                  {children}
+            </NotificationProvider>
+          </ThemeProvider>
+        </ClientOnly>
       </body>
     </html>
   );

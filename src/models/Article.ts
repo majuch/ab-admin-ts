@@ -14,4 +14,13 @@ export interface Article {
     price: string;
     current_qty: string;
     global_qty: number;
+    quantity?: number;
+}
+
+export interface ArticleCart {
+    id: number;
+    code: string;
+    description: string;
+    price: number;
+    quantity?: number;
 }

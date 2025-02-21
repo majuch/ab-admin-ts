@@ -32,7 +32,7 @@ export function useAuthFetch () {
 
       showNotification({
         msj: data.message,
-        open: true,
+        open: true, 
         status: 'success'
       })
 
@@ -40,7 +40,10 @@ export function useAuthFetch () {
 
       signIn(data.token)
 
-      if (redirectRoute) router.push(redirectRoute)
+      if (data.status !== 200) 
+        router.push('/login')
+      else
+        if (redirectRoute) router.push(redirectRoute)
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       showNotification({

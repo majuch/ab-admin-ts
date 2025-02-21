@@ -33,14 +33,14 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
                 const prices = article.price.split("||").map((p: string) => {
                     const [lista, price] = p.split("~");
                     const precio = new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' }).format(parseFloat(price.trim()));
-                    return { lista: lista.trim(), price:precio };
+                    return { lista: lista.trim(), price: precio };
                 });
                 const exists = article.current_qty.split("||").map((e: string) => {
                     const [branch, quantity] = e.split("~");
                     return { branch: branch.trim(), quantity: parseFloat(quantity.trim()).toFixed(2) };
                 });
-                return { ...article, price: prices, current_qty: exists };
-            });
+                return { ...article, price: prices, current_qty: exists, precios: prices };
+            }) as Article[];
 
             setData(articleData[0]);
         }).then(() => { });
@@ -59,12 +59,12 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
     function handleClicked() {
         try{
             if (!data) return;
-            const price = data.price.find((p) => p.lista === selectedPrice);
+            const price = data.precios?.find((p) => p.lista === selectedPrice);
             const article: ArticleCart = {
                 id: data.id,
                 code: data.code,
                 description: data.description,
-                price: parseFloat(price.price.replace(/[^0-9.-]+/g,"")),
+                price: price ? parseFloat(price.price.replace(/[^0-9.-]+/g,"")) : 0,
             };
             AddToCart(article, quantity);
             showNotification({
@@ -115,7 +115,7 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
-                                    {data && data.current_qty.map((branch, index) => (
+                                    {data && data.existencias?.map((branch, index) => (
                                         <TableRow key={index}>
                                             <TableCell>{branch.branch}</TableCell>
                                             <TableCell className="text-right">{branch.quantity}</TableCell>
@@ -140,7 +140,7 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
-                                    {data && data.price.map((price, index) => (
+                                    {data && data.precios?.map((price, index) => (
                                         <TableRow key={index}>
                                             <TableCell>{price.lista}</TableCell>
                                             <TableCell className="text-right">{price.price}</TableCell>

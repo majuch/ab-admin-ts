@@ -15,6 +15,8 @@ export interface Article {
     current_qty: string;
     global_qty: number;
     quantity?: number;
+    precios?: {lista: string, price:string }[];
+    existencias?: {branch: string, quantity: number}[];
 }
 
 export interface ArticleCart {

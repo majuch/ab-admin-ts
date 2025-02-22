@@ -41,16 +41,23 @@ export default async function handler(
                         join receivables receivables2 ON receivables2.receipt = receipts.id
                         group by receivables2.note
                     ) t on rb.note = t.note
-                    where tip='CREDIT'::receipt_tip
+                    where status='PENDING'
                     group by customer_id
                 ) r on cr.id=r.customer_id
                 left join(
                     select 
                         so.id_customer,
-                        sum(so.total-rb1.payment) amount
+                        sum(so.total - t1.payment) amount
                     from service_order so
-                    join receivables rb1 on so.id=rb1.service
-                    where type_r in ('SERVICIO', 'PAGO_SERVICIO') and so.status='VIGENTE'
+                    JOIN (
+                        select 
+                            receivables3.service,
+                            sum(receivables3.payment) payment
+                        from service_order
+                        join receivables receivables3 ON receivables3.service = service_order.id
+                        group by receivables3.service
+                    ) t1 on so.id=t1.service
+                    where so.status='VIGENTE'
                     group by so.id_customer
                 ) s on cr.id=s.id_customer
                 WHERE cr.id=$1

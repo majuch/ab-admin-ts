@@ -12,7 +12,7 @@ export default async function handler(
 
             const results = await query<Customer>(
                 `
-                SELECT id, name nombre FROM price_lists
+                SELECT id, name nombre FROM price_lists order by name
                 `, []
             )
 

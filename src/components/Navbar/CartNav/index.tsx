@@ -40,7 +40,8 @@ export function CartSheet() {
             <div key={article.id} className="flex items-center justify-between">
               <div>
                 <h3 className="text-lg font-bold">{article.code}</h3>
-                <p className="text-sm text-muted-foreground">{article.quantity} x {article.price}</p>
+                <p className="line-clamp-2 text-sm text-muted-foreground ">{article.description}</p>
+                <p className="text-sm  mt-2">{article.quantity}  x  {Intl.NumberFormat('es-MX', {style: 'currency', currency: 'MXN'}).format(article.price)}</p>
               </div>
               <Button variant='outline' onClick={() => removeArticle(article)}><Trash2 className=" text-red-600"/></Button>
             </div>
@@ -48,11 +49,11 @@ export function CartSheet() {
         </div>
         <div className="flex items-center justify-between">
           <h3 className="text-lg font-bold">Total</h3>
-          <p className="text-lg font-bold">{totalAmount}</p>
+          <p className="text-lg font-bold">{Intl.NumberFormat('es-MX', {style: 'currency', currency: 'MXN'}).format(totalAmount)}</p>
         </div>
         <SheetFooter>
           <SheetClose asChild>
-            <Button type="submit">Save changes</Button>
+            <Button type="submit">Guardar</Button>
           </SheetClose>
         </SheetFooter>
       </SheetContent>

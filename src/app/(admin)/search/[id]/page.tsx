@@ -39,7 +39,7 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
                     const [branch, quantity] = e.split("~");
                     return { branch: branch.trim(), quantity: parseFloat(quantity.trim()).toFixed(2) };
                 });
-                return { ...article, price: prices, current_qty: exists, precios: prices };
+                return { ...article, price: prices, existencias: exists, precios: prices };
             }) as Article[];
 
             setData(articleData[0]);
